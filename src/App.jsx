@@ -99,9 +99,9 @@ const App = () => {
   // }, []); 
 
   return (
-  <div className="container bg-[#182331] py-[73px] h-screen mx-auto">
+  <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
 
-    <div className="px-[68px] py-4 mx-auto 2xl:px-[195px] 2xl:my-auto">
+    <div className="pl-[68px] xl:pl-[140px] 2xl:pl-[280px] py-4 mx-auto 2xl:px-[195px] 2xl:my-auto">
       <p className="text-[#536378] text-[26px]">V.1.0.0</p>
       <p className="text-white text-[32px] font-[700]">Monitor Deployment</p>
     </div>
@@ -115,7 +115,7 @@ const App = () => {
       </div>
 
       <div className="flex items-center p-4">        
-          <form className="text-white mr-2" method="get">   
+          <form className="text-white mr-2" >   
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -149,7 +149,7 @@ const App = () => {
       </div>
     </div>
 
-    <div className="flex bg-[#374151] w-full  lg:w-[1132px] md:w-[1132px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
+    <div className="flex bg-[#374151] w-screen  lg:w-[1132px] md:w-[1132px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
       <p className="w-[220px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">URL</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">TAG</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] pl-2">STATUS</p>
