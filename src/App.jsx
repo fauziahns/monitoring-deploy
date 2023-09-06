@@ -101,12 +101,12 @@ const App = () => {
   return (
   <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
 
-    <div className="pl-[68px] xl:pl-[140px] 2xl:pl-[280px] py-4 mx-auto 2xl:px-[195px] 2xl:my-auto">
+    <div className="pl-[65px] 2xl:pl-[280px] py-4 mx-auto">
       <p className="text-[#536378] text-[26px]">V.1.0.0</p>
       <p className="text-white text-[32px] font-[700]">Monitor Deployment</p>
     </div>
 
-    <div className="bg-[#1F2A37] w-full lg:w-[1132px] md:w-[1132px] xl:w-[1132px] 2xl:w-[1132px] flex flex-col lg:flex-row xl:flex-row 2xl:flex-row md:flex-row items-center justify-between rounded-t-lg mx-auto px-4">
+    <div className="bg-[#1F2A37] w-full lg:w-[1132px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] flex flex-col lg:flex-row xl:flex-row 2xl:flex-row md:flex-row items-center justify-between rounded-t-lg mx-auto px-4">
       <div className=" rounded-lg relative border">
         <img src="src/assets/clock.png" alt="icon-clock" className="absolute bottom-2 left-3"/>
         <select  
@@ -149,7 +149,7 @@ const App = () => {
       </div>
     </div>
 
-    <div className="flex bg-[#374151] w-screen  lg:w-[1132px] md:w-[1132px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
+    <div className="flex bg-[#374151] w-screen  lg:w-[1132px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
       <p className="w-[220px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">URL</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">TAG</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] pl-2">STATUS</p>
