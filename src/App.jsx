@@ -94,9 +94,9 @@ const App = () => {
   // }, []); 
 
   return (
-  <div className=" bg-[#182331] py-[73px] w-auto h-screen mx-auto">
+  <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
     <div className="">
-    <div className="w-[1130px] mx-auto py-4">
+    <div className="w-full lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto py-4">
       <p className="text-[#536378] text-[26px]">V.1.0.0</p>
       <p className="text-white text-[32px] font-[700]">Monitor Deployment</p>
     </div>
