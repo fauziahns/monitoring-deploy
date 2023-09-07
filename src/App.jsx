@@ -23,8 +23,8 @@ const App = () => {
         status : "9013"
     },
     {
-        url: "https://hallo.com",
-        tag: "test",
+        url: "https://baraya.com",
+        tag: "baraya",
         urlDeploy : "https://dummyurl/test-deploy",
         status : "7813"
     },
@@ -32,25 +32,7 @@ const App = () => {
         url: "https://daytrans.com",
         tag: "daytrans",
         urlDeploy : "https://dummyurl/test-deploy",
-        status : "5013"
-    },
-    {
-        url: "https://jackholidays.com",
-        tag: "jackholidays",
-        urlDeploy : "https://dummyurl/test-deploy",
-        status : "9613"
-    },
-    {
-        url: "https://hallo.com",
-        tag: "test",
-        urlDeploy : "https://dummyurl/test-deploy",
-        status : "7813"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
-        status : "5813"
+        status : "5213"
     },
     {
         url: "https://jackholidays.com",
@@ -59,10 +41,22 @@ const App = () => {
         status : "9013"
     },
     {
-        url: "https://hallo.com",
-        tag: "test",
+        url: "https://baraya.com",
+        tag: "baraya",
         urlDeploy : "https://dummyurl/test-deploy",
         status : "7813"
+    },
+    {
+        url: "https://daytrans.com",
+        tag: "daytrans",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "5213"
+    },
+    {
+        url: "https://jackholidays.com",
+        tag: "jackholidays",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "9013"
     },
   ]
   const [list, setList] =  useState(dummydata)
@@ -73,12 +67,33 @@ const App = () => {
   const [loading, setLoading] = useState(false)
 
   const filtered = !search
-  ? list
-  : list.filter((item) =>
-      item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
-      item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
-      item.status.toLowerCase().includes(versionDebounce.toLowerCase())
-    );
+    ? list.filter((item) => 
+        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
+      )
+    : list.filter((item) =>
+        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
+      )
+  
+  const filteredResult = () => {
+    if (setSearchVersion) {
+      return list.filter((item) => 
+        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
+      )
+    } else if (setSearch) {
+      return list.filter((item) => 
+        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.url.toLowerCase.includes(searchDebounce.toLowerCase())
+      )
+    } else {
+      return list.filter((item) => 
+        item.status.toLowerCase().includes(versionDebounce.toLowerCase()) &&
+        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.url.toLowerCase().includes(searchDebounce.toLowerCase())
+      )
+    }
+  }
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -95,7 +110,7 @@ const App = () => {
 
   return (
   <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
-    <div className="">
+
     <div className="w-full lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto py-4">
       <p className="text-[#536378] text-[26px]">V.1.0.0</p>
       <p className="text-white text-[32px] font-[700]">Monitor Deployment</p>
@@ -138,13 +153,15 @@ const App = () => {
             </div>
           </form>
 
-        <button className="bg-[#1A56DB] w-[83px] h-[41px] rounded-lg text-white hover:bg-[#5b93dde1]">
+        <button 
+          className="bg-[#1A56DB] w-[83px] h-[41px] rounded-lg text-white hover:bg-[#5b93dde1]"
+          onClick={filteredResult}>
             Watch
         </button>
       </div>
     </div>
 
-    <div className="flex bg-[#374151] w-full  lg:w-[1132px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
+    <div className="flex bg-[#374151] w-full  lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-[#9CA3AF] px-5 h-[50px] items-center text-[14px] font-[600]">
       <p className="w-[220px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">URL</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">TAG</p>
       <p className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] pl-2">STATUS</p>
@@ -182,7 +199,6 @@ const App = () => {
 
     <div className="bg-[#182331] pb-10">
       <p className="text-center pt-10 text-[#536378]">2023</p>
-    </div>
     </div>
   </div>
   )
