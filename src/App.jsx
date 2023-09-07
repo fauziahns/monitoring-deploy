@@ -68,13 +68,14 @@ const App = () => {
   const [searchVersion, setSearchVersion] = useState("")
   const [search, setSearch] = useState("")
   const [searchDebounce] = useDebounce(search, 500)
+  const [versionDebounce] = useDebounce(searchVersion, 500)
 
   const filtered = !search
   ? list
   : list.filter((item) =>
-      item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) ||
-      item.url.toLowerCase().includes(searchDebounce.toLowerCase()) ||
-      item.status.toLowerCase().includes(searchVersion.toLowerCase())
+      item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+      item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+      item.status.toLowerCase().includes(versionDebounce.toLowerCase())
     );
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -91,7 +92,7 @@ const App = () => {
   // }, []); 
 
   return (
-  <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
+  <div className=" bg-[#182331] py-[73px] w-auto h-screen mx-auto">
 
     <div className="mx-auto">
       <div className="pl-[65px] 2xl:pl-[280px] py-4 mx-auto">
@@ -150,21 +151,23 @@ const App = () => {
 
       {filtered.map((item) => {
         return (
-        <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
-            <div className="w-[200px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">
-              <a href={item.url} target='_blank'>
-                <p>{item.url}</p>
-              </a>
-            </div>
-            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
-              <p>{item.tag}</p>
-            </div>
-            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
-              <p 
-                className ="bg-[#E8EDFD] px-2 py-[3px] text-center w-[60px] rounded-md text-[#1C4F9B]">
-                {item.status}
-              </p>
-            </div>
+        <div className="bg-[#182331]">
+          <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
+              <div className="w-[200px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">
+                <a href={item.url} target='_blank'>
+                  <p>{item.url}</p>
+                </a>
+              </div>
+              <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
+                <p>{item.tag}</p>
+              </div>
+              <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
+                <p 
+                  className ="bg-[#E8EDFD] px-2 py-[3px] text-center w-[60px] rounded-md text-[#1C4F9B]">
+                  {item.status}
+                </p>
+              </div>
+          </div>
         </div>
         );
       })}
