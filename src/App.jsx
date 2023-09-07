@@ -23,14 +23,14 @@ const App = () => {
         status : "9013"
     },
     {
-        url: "https://baraya.com",
-        tag: "baraya",
+        url: "https://tiketux.com",
+        tag: "tiketux",
         urlDeploy : "https://dummyurl/test-deploy",
         status : "7813"
     },
     {
-        url: "https://daytrans.com",
-        tag: "daytrans",
+        url: "https://aaragon.com",
+        tag: "aragon",
         urlDeploy : "https://dummyurl/test-deploy",
         status : "5213"
     },
@@ -71,29 +71,11 @@ const App = () => {
         item.status.toLowerCase().includes(versionDebounce.toLowerCase())
       )
     : list.filter((item) =>
-        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) ||
         item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
         item.status.toLowerCase().includes(versionDebounce.toLowerCase())
       )
   
-  const filteredResult = () => {
-    if (setSearchVersion) {
-      return list.filter((item) => 
-        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
-      )
-    } else if (setSearch) {
-      return list.filter((item) => 
-        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
-        item.url.toLowerCase.includes(searchDebounce.toLowerCase())
-      )
-    } else {
-      return list.filter((item) => 
-        item.status.toLowerCase().includes(versionDebounce.toLowerCase()) &&
-        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) &&
-        item.url.toLowerCase().includes(searchDebounce.toLowerCase())
-      )
-    }
-  }
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -154,8 +136,7 @@ const App = () => {
           </form>
 
         <button 
-          className="bg-[#1A56DB] w-[83px] h-[41px] rounded-lg text-white hover:bg-[#5b93dde1]"
-          onClick={filteredResult}>
+          className="bg-[#1A56DB] w-[83px] h-[41px] rounded-lg text-white hover:bg-[#5b93dde1]">  
             Watch
         </button>
       </div>
