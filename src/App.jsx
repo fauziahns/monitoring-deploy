@@ -4,86 +4,6 @@ import Loader from "./components/Loader"
 import axios from "axios"
 
 const App = () => {
-  const dummydata = [
-    {
-        url: "https://baraya.com",
-        tag: "baraya",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "6813"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "9213"
-    },
-    {
-        url: "https://jackholidays.com",
-        tag: "jackholidays",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "9013"
-    },
-    {
-        url: "https://tiketux.com",
-        tag: "tiketux",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "7813"
-    },
-    {
-        url: "https://aaragon.com",
-        tag: "aragon",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "5213"
-    },
-    {
-        url: "https://jackholidays.com",
-        tag: "jackholidays",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "9014"
-    },
-    {
-        url: "https://baraya.com",
-        tag: "baraya",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "7813"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "5213"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "5213"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "5213"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "5213"
-    },
-    {
-        url: "https://daytrans.com",
-        tag: "daytrans",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "4213"
-    },
-    {
-        url: "https://jackholidays.com",
-        tag: "jackholidays",
-        urlDeploy : "baraya-travel.com/test-deploy",
-        status : "9013"
-    },
-  ]
   const [list, setList] =  useState([])
   const [filteredData, setFilteredData] = useState([])
   const [searchVersion, setSearchVersion] = useState("")
@@ -92,27 +12,37 @@ const App = () => {
   const [versionDebounce] = useDebounce(searchVersion, 500)
   const [loading, setLoading] = useState(false)
   const baseURL = "https://64fa8af1cb9c00518f79fc71.mockapi.io/v1/list"
-
-  const filtered = !search
-    ? list.filter((item) => 
-        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
-      )
-    : list.filter((item) =>
+  
+  const filtered = 
+  list.filter((item) =>
         item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) ||
         item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
         item.status.toLowerCase().includes(versionDebounce.toLowerCase())
       )
-  
+
+  const statusCheck = async (data) => {
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+      const response = await axios.get(element.url_preview)
+      let newData = [...data]
+      newData[index].status = response.data.code
+
+      setList(newData)
+    }
+  } 
+
   const fetchData = async () => {
     try {
       const response = await axios.get(baseURL)
       setList(response.data)
+      statusCheck(response.data)
     } catch(e) {
       console.error('error', e);
     }
   }
 
   useEffect(() => {
+
     fetchData()
   }, [])
 
@@ -173,7 +103,7 @@ const App = () => {
       loading ? <Loader/> :
      filtered.map((item) => {
       return (
-      <div className="bg-[#182331]">
+      <div key={item.id} className="bg-[#182331]">
         <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
             <div className="w-[200px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">
               <a href={item.url} target='_blank'>
