@@ -1,94 +1,97 @@
 import { useEffect, useRef, useState } from "react"
 import { useDebounce } from "use-debounce"
 import Loader from "./components/Loader"
+import axios from "axios"
 
 const App = () => {
   const dummydata = [
     {
         url: "https://baraya.com",
         tag: "baraya",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "6813"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "9213"
     },
     {
         url: "https://jackholidays.com",
         tag: "jackholidays",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "9013"
     },
     {
         url: "https://tiketux.com",
         tag: "tiketux",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "7813"
     },
     {
         url: "https://aaragon.com",
         tag: "aragon",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "5213"
     },
     {
         url: "https://jackholidays.com",
         tag: "jackholidays",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "9014"
     },
     {
         url: "https://baraya.com",
         tag: "baraya",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "7813"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "5213"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "5213"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "5213"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "5213"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "4213"
     },
     {
         url: "https://jackholidays.com",
         tag: "jackholidays",
-        urlDeploy : "https://dummyurl/test-deploy",
+        urlDeploy : "baraya-travel.com/test-deploy",
         status : "9013"
     },
   ]
-  const [list, setList] =  useState(dummydata)
+  const [list, setList] =  useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [searchVersion, setSearchVersion] = useState("")
   const [search, setSearch] = useState("")
   const [searchDebounce] = useDebounce(search, 500)
   const [versionDebounce] = useDebounce(searchVersion, 500)
   const [loading, setLoading] = useState(false)
+  const baseURL = "https://64fa8af1cb9c00518f79fc71.mockapi.io/v1/list"
 
   const filtered = !search
     ? list.filter((item) => 
@@ -100,19 +103,18 @@ const App = () => {
         item.status.toLowerCase().includes(versionDebounce.toLowerCase())
       )
   
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('');
-  //       setData(response.data);
-  //     } catch (error) {
-  //       console.error('Terjadi kesalahan:', error);
-  //       return <ErrorPages/>
-  //     }
-  //   };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(baseURL)
+      setList(response.data)
+    } catch(e) {
+      console.error('error', e);
+    }
+  }
 
-  //   fetchData();
-  // }, []); 
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
   <div className=" bg-[#182331] py-[73px] w-full h-screen mx-auto">
@@ -158,11 +160,6 @@ const App = () => {
                   className="block lg:w-[384px] xl:w-[384px] 2xl:w-[384px] md:w-[384px] w-[250px] h-[42px] p-4 pl-10 text-sm rounded-lg bg-[#374151] border-2 border-[#4B5563] placeholder:text-[#9CA3AF]" placeholder="Search URL, Tag" />
             </div>
           </form>
-
-        <button 
-          className="bg-[#1A56DB] w-[83px] h-[41px] rounded-lg text-white hover:bg-[#5b93dde1]">  
-            Watch
-        </button>
       </div>
     </div>
 
@@ -174,7 +171,7 @@ const App = () => {
 
     {
       loading ? <Loader/> :
-      filtered.map((item) => {
+     filtered.map((item) => {
       return (
       <div className="bg-[#182331]">
         <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
@@ -186,7 +183,7 @@ const App = () => {
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
               <p>{item.tag}</p>
             </div>
-            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
+            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] ml-2">
               <p 
                 className ={`
                   ${item.status.includes(searchVersion) 
