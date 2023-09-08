@@ -8,13 +8,13 @@ const App = () => {
         url: "https://baraya.com",
         tag: "baraya",
         urlDeploy : "https://dummyurl/test-deploy",
-        status : "7813"
+        status : "6813"
     },
     {
         url: "https://daytrans.com",
         tag: "daytrans",
         urlDeploy : "https://dummyurl/test-deploy",
-        status : "5213"
+        status : "9213"
     },
     {
         url: "https://jackholidays.com",
@@ -38,7 +38,7 @@ const App = () => {
         url: "https://jackholidays.com",
         tag: "jackholidays",
         urlDeploy : "https://dummyurl/test-deploy",
-        status : "9013"
+        status : "9014"
     },
     {
         url: "https://baraya.com",
@@ -51,6 +51,30 @@ const App = () => {
         tag: "daytrans",
         urlDeploy : "https://dummyurl/test-deploy",
         status : "5213"
+    },
+    {
+        url: "https://daytrans.com",
+        tag: "daytrans",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "5213"
+    },
+    {
+        url: "https://daytrans.com",
+        tag: "daytrans",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "5213"
+    },
+    {
+        url: "https://daytrans.com",
+        tag: "daytrans",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "5213"
+    },
+    {
+        url: "https://daytrans.com",
+        tag: "daytrans",
+        urlDeploy : "https://dummyurl/test-deploy",
+        status : "4213"
     },
     {
         url: "https://jackholidays.com",
@@ -165,12 +189,12 @@ const App = () => {
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
               <p 
                 className ={`
-                  ${item.status === filtered 
-                    ? "bg-[#59dd54] text-white" 
-                    : "bg-[#E8EDFD] text-[#1C4F9B]" 
-                  }bg-[#E8EDFD] px-2 py-[3px] text-center w-[60px] rounded-md text-[#1C4F9B]
-                `}>
-                {item.status}
+                  ${item.status.includes(searchVersion) 
+                    ? "bg-[#1C4F9B] px-2 py-[3px] text-center w-[60px] rounded-md text-[#E8EDFD]" 
+                    : "" }
+                    bg-[#E8EDFD] px-2 py-[3px] text-center w-[60px] rounded-md text-[#1C4F9B]`}
+                 >
+                  {item.status}
               </p>
             </div>
         </div>
@@ -184,5 +208,4 @@ const App = () => {
   </div>
   )
 }
-
 export default App
