@@ -34,7 +34,7 @@ const App = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(baseURL)
-      setList(response.data)
+       setList(response.data)
       statusCheck(response.data)
     } catch(e) {
       console.error('error', e);
@@ -116,10 +116,10 @@ const App = () => {
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] ml-2">
               <p 
                 className ={`
+                px-2 py-[3px] text-center w-[60px] rounded-md
                   ${item.status.includes(searchVersion) 
-                    ? "bg-[#1C4F9B] px-2 py-[3px] text-center w-[60px] rounded-md text-[#E8EDFD]" 
-                    : "" }
-                    bg-[#E8EDFD] px-2 py-[3px] text-center w-[60px] rounded-md text-[#1C4F9B]`}
+                      ? "bg-[#1C4F9B] text-[#E8EDFD]"
+                      : "bg-[#E8EDFD] text-[#1C4F9B]" }`}
                  >
                   {item.status}
               </p>
