@@ -22,7 +22,6 @@ const App = () => {
   const fetchData = async (data) => {
     try {
       const response = await axios.get(baseURL)
-      console.log(response.data);
       const dataNew = await Promise.all(response.data.map(async(item, index) => {
         try {
           const newUrl = await axios.get(item.url)
@@ -32,22 +31,11 @@ const App = () => {
         }
         
       }));
-    
-      console.log('dataNew', await dataNew);
       setList(dataNew)
     } catch(e) {
       console.error('error', e);
     }
   }
-
-  // for (let index = 0; index < data.length; index++) {
-  //   const element = data[index];
-  //   const statusCheck = await axios.get(element.url)
-  //   let newData = [...data]
-  //   newData[index].url = statusCheck.data.dataNew
-
-  //   setList(newData)
-  // }
 
   useEffect(() => {
     fetchData()
