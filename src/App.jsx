@@ -113,7 +113,7 @@ const App = () => {
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
               <p>{item.name}</p>
             </div>
-            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] ml-2">
+            <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
               <p 
                 className ={`
                 w-[90px] px-2 py-[3px] text-center rounded-md  text-[#1C4F9B]
