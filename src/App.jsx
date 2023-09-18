@@ -100,7 +100,7 @@ const App = () => {
     </div>
 
     {
-      loading ? <Loader/> :
+      loading ? <p>Loading...</p> :
      filtered.map((item, index) => {
       return (
       <div key={index} className="bg-[#182331]">
@@ -116,8 +116,8 @@ const App = () => {
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
               <p 
                 className ={`
-                w-[90px] px-2 py-[3px] text-center rounded-md  text-[#1C4F9B]
-                  ${item.url.includes(searchVersion) 
+                w-[90px] px-2 py-[3px] text-center rounded-md 
+                  ${searchVersion && item.url.toLowerCase().includes(searchVersion.toLowerCase())
                       ? "bg-[#1C4F9B] text-[#E8EDFD]"
                       : "bg-[#E8EDFD] text-[#1C4F9B]" }`}
                  >
