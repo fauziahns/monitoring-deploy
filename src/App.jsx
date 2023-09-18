@@ -1,48 +1,55 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDebounce } from "use-debounce"
 import Loader from "./components/Loader"
 import axios from "axios"
 
 const App = () => {
   const [list, setList] =  useState([])
-  const [filteredData, setFilteredData] = useState([])
   const [searchVersion, setSearchVersion] = useState("")
   const [search, setSearch] = useState("")
   const [searchDebounce] = useDebounce(search, 500)
   const [versionDebounce] = useDebounce(searchVersion, 500)
   const [loading, setLoading] = useState(false)
-  const baseURL = "https://64fa8af1cb9c00518f79fc71.mockapi.io/v1/list"
+  const baseURL = "https://shuttle.jackalholidays.com/api/test-deploy/listing"
   
   const filtered = 
   list.filter((item) =>
-        item.tag.toLowerCase().includes(searchDebounce.toLowerCase()) ||
-        item.url.toLowerCase().includes(searchDebounce.toLowerCase()) &&
-        item.status.toLowerCase().includes(versionDebounce.toLowerCase())
+        item.host.toLowerCase().includes(searchDebounce.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchDebounce.toLowerCase()) &&
+        item.url.toLowerCase().includes(versionDebounce.toLowerCase())
       )
 
-  const statusCheck = async (data) => {
-    for (let index = 0; index < data.length; index++) {
-      const element = data[index];
-      const response = await axios.get(element.url_preview)
-      let newData = [...data]
-      newData[index].status = response.data.code
-
-      setList(newData)
-    }
-  } 
-
-  const fetchData = async () => {
+  const fetchData = async (data) => {
     try {
       const response = await axios.get(baseURL)
-       setList(response.data)
-      statusCheck(response.data)
+      console.log(response.data);
+      const dataNew = await Promise.all(response.data.map(async(item, index) => {
+        try {
+          const newUrl = await axios.get(item.url)
+          return { ...item, url: newUrl.data };
+        } catch (error) {
+          return { ...item, url: 'Url Error' }
+        }
+        
+      }));
+    
+      console.log('dataNew', await dataNew);
+      setList(dataNew)
     } catch(e) {
       console.error('error', e);
     }
   }
 
-  useEffect(() => {
+  // for (let index = 0; index < data.length; index++) {
+  //   const element = data[index];
+  //   const statusCheck = await axios.get(element.url)
+  //   let newData = [...data]
+  //   newData[index].url = statusCheck.data.dataNew
 
+  //   setList(newData)
+  // }
+
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -54,14 +61,7 @@ const App = () => {
       <p className="text-white text-[32px] font-[700]">Monitor Deployment</p>
     </div>
 
-    <div className="bg-[#1F2A37] w-full lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] flex flex-col lg:flex-row xl:flex-row 2xl:flex-row md:flex-row items-center justify-between rounded-t-lg mx-auto px-5">
-      <div className=" rounded-lg relative border">
-        <img src="src/assets/clock.png" alt="icon-clock" className="absolute bottom-2 left-3"/>
-        <select  
-            className="bg-[#1F2A37] rounded-lg w-[87px] h-[34px] placeholder:my-4 placeholder:px-8 border-2 border-[#374151]" >
-        </select>
-      </div>
-
+    <div className="bg-[#1F2A37] w-full lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] flex flex-col lg:flex-row xl:flex-row 2xl:flex-row md:flex-row items-center justify-end rounded-t-lg mx-auto px-5">
       <div className="flex items-center p-4">        
           <form className="text-white mr-2" >   
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -101,27 +101,27 @@ const App = () => {
 
     {
       loading ? <Loader/> :
-     filtered.map((item) => {
+     filtered.map((item, index) => {
       return (
-      <div key={item.id} className="bg-[#182331]">
+      <div key={index} className="bg-[#182331]">
         <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
             <div className="w-[200px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">
-              <a href={item.url} target='_blank'>
-                <p>{item.url}</p>
+              <a href={item.host} target='_blank'>
+                <p>{item.host}</p>
               </a>
             </div>
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
-              <p>{item.tag}</p>
+              <p>{item.name}</p>
             </div>
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px] ml-2">
               <p 
                 className ={`
-                px-2 py-[3px] text-center w-[60px] rounded-md
-                  ${item.status.includes(searchVersion) 
+                w-[90px] px-2 py-[3px] text-center rounded-md  text-[#1C4F9B]
+                  ${item.url.includes(searchVersion) 
                       ? "bg-[#1C4F9B] text-[#E8EDFD]"
                       : "bg-[#E8EDFD] text-[#1C4F9B]" }`}
                  >
-                  {item.status}
+                  {item.url}
               </p>
             </div>
         </div>
