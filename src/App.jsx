@@ -20,25 +20,33 @@ const App = () => {
         item.url.toLowerCase().includes(versionDebounce.toLowerCase())
       )
 
-  const fetchData = async (data) => {
-    try {
-      const response = await axios.get(baseURL)
-      const dataNew = await Promise.all(response.data.map(async(item, index) => {
-        try {
-          const newUrl = await axios.get(item.url)
-          return { ...item, url: newUrl.data };
-        } catch (error) {
-          return { ...item, url: 'Url Error' }
-        }
-        
-      }));
-      setList(dataNew)
-      setIsLoading(false)
-    } catch(e) {
-      console.error('error', e);
-      setIsLoading(false)
-    }
-  }
+  const fetchData = (data) => {
+    axios.get(baseURL)
+      .then(response => {
+        const dataNew = [];
+      
+        const promises = response.data.map(item => {
+        return axios.get(item.url)
+          .then(newUrlResponse => ({ ...item, url: newUrlResponse.data }))
+          .catch(error => ({ ...item, url: 'Url Error' }));
+        });
+      
+        Promise.all(promises)
+          .then(dataNew => {
+            setList(dataNew);
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.error('error', error);
+            setIsLoading(false);
+          });
+    })
+      .catch(error => {
+      console.error('error', error);
+      setIsLoading(false);
+      });
+  };
+      
 
   useEffect(() => {
     fetchData()
@@ -91,11 +99,11 @@ const App = () => {
     </div>
 
     {
-      isLoading ? <Loader/> :
-     filtered.map((item, index) => {
+    isLoading ? <Loader/> :  
+    filtered.map((item, index) => {
       return (
-      <div key={index} className="bg-[#182331]">
-        <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
+        <div key={index} className="bg-[#182331]">
+          <div className="flex bg-[#1F2A37] w-screen lg:w-[1130px] md:w-[800px] xl:w-[1132px] 2xl:w-[1132px] mx-auto text-white px-5 h-[50px] items-center text-[14px] font-[600] border-[#374151] border-b-[1px]">
             <div className="w-[200px] lg:w-[432px] md:w-[432px] xl:w-[432px] 2xl:w-[432px]">
               <a href={item.host} target='_blank'>
                 <p>{item.host}</p>
@@ -105,20 +113,21 @@ const App = () => {
               <p>{item.name}</p>
             </div>
             <div className="w-[150px] lg:w-[350px] md:w-[350px] xl:w-[350px] 2xl:w-[350px]">
-              <p 
-                className ={`
-                w-[90px] px-2 py-[3px] text-center rounded-md 
-                  ${searchVersion && item.url.toLowerCase().includes(searchVersion.toLowerCase())
+              <p
+                className={`w-[90px] px-2 py-[3px] text-center rounded-md 
+                  ${
+                    (searchVersion && item.url.toLowerCase().includes(searchVersion.toLowerCase()))
                       ? "bg-[#1C4F9B] text-[#E8EDFD]"
-                      : "bg-[#E8EDFD] text-[#1C4F9B]" }`}
-                 >
-                  {item.url}
+                      : "bg-[#E8EDFD] text-[#1C4F9B]"
+                  }`}>
+                {isLoading ? <Loader/> : item.url}
               </p>
             </div>
+          </div>
         </div>
-      </div>
       );
-    })}
+    })
+    }
 
     <div className="bg-[#182331] pb-10">
       <p className="text-center pt-10 text-[#536378]">2023</p>
