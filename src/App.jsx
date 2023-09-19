@@ -5,6 +5,7 @@ import axios from "axios"
 
 const App = () => {
   const [list, setList] =  useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const [searchVersion, setSearchVersion] = useState("")
   const [search, setSearch] = useState("")
   const [searchDebounce] = useDebounce(search, 500)
@@ -32,8 +33,10 @@ const App = () => {
         
       }));
       setList(dataNew)
+      setIsLoading(false)
     } catch(e) {
       console.error('error', e);
+      setIsLoading(false)
     }
   }
 
@@ -88,7 +91,7 @@ const App = () => {
     </div>
 
     {
-      loading ? <p>Loading...</p> :
+      isLoading ? <Loader/> :
      filtered.map((item, index) => {
       return (
       <div key={index} className="bg-[#182331]">
